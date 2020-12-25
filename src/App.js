@@ -235,7 +235,7 @@ function App() {
           <form onSubmit={addMyPokemon}>
             <label>Pokemon Nickname: </label>
             <input name="nickname" type="text" ref={PokNickname} required/><br/>
-            <input type='submit' value='Add' />
+            <input type='submit' value='ADD' />
           </form>
           </InputBox>
         </Box>
