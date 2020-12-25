@@ -113,7 +113,7 @@ function App() {
   }
 
   const releasePokemon = (data) => {
-    let newData  = MyPokemon.filter(val => { return val.nickname != data.nickname});
+    let newData  = MyPokemon.filter(val => { return val.nickname !== data.nickname});
     setMyPokemon(newData);    
   }
 
@@ -168,7 +168,7 @@ function App() {
         <label><h1>Pokemon Detail</h1></label>
         <div className='detailBox'>
           <div className='imageBox'>
-            <img src={PokemonDetail.img} />
+            <img src={PokemonDetail.img} alt='Pokemon Image'/>
           </div>
           <table>
           {PokemonDetail.nickname !== '' ? (
@@ -266,23 +266,22 @@ function App() {
   return (
     <BrowserRouter>
     { Loading ? <h1>LOADING...</h1> :(
-      <div>
-        {/* Navigation Bar */}
-        <nav>
-          <ul>
-            <li><Link to='/'>Pokemon</Link></li>
-            <li><Link to='/mypokemon'>My Pokemon</Link></li>
-          </ul>
-        </nav>
+      <>
+      <nav>
+        <ul>
+          <li><Link to='/'>Pokemon</Link></li>
+          <li><Link to='/mypokemon'>My Pokemon</Link></li>
+        </ul>
+      </nav>
 
-        <main>
-          <Switch>
-            <Route path='/' exact component={pokemonPage} />
-            <Route path='/pokemon/:name' exact component={showDetail} />
-            <Route path='/mypokemon' exact component={myPokemonPage} />
-          </Switch>
-        </main>
-      </div>
+      <main>
+        <Switch>
+          <Route path='/' exact component={pokemonPage} />
+          <Route path='/pokemon/:name' exact component={showDetail} />
+          <Route path='/mypokemon' exact component={myPokemonPage} />
+        </Switch>
+      </main>
+      </>
     )}
     </BrowserRouter>
   );
