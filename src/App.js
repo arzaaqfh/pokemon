@@ -32,9 +32,15 @@ function App() {
   }, [] );
 
   useEffect(() => {
-    localStorage.setItem('pokemon-detail', JSON.stringify(PokemonDetail));
-    localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
-    localStorage.setItem('pokemon-name', PokemonName);
+    if(PokemonDetail){
+      localStorage.setItem('pokemon-detail', JSON.stringify(PokemonDetail));
+    }
+    if(MyPokemon){
+      localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
+    }
+    if(PokemonName !== ''){
+      localStorage.setItem('pokemon-name', PokemonName);
+    }
   } );
 
   useEffect(() =>  {
@@ -188,7 +194,7 @@ function App() {
               <td>:</td>
               <td>
                 <ul>
-                  {/* {PokemonDetail.moves.map(val=><li>{val.move.name}</li>)} */}
+                  {PokemonDetail.moves.map(val=><li>{val.move.name}</li>)}
                 </ul>
               </td>
             </tr>
@@ -197,7 +203,7 @@ function App() {
               <td>:</td>
               <td>
                 <ul>
-                  {/* {PokemonDetail.abilities.map(val=><li>{val.ability.name}</li>)} */}
+                  {PokemonDetail.abilities.map(val=><li>{val.ability.name}</li>)}
                 </ul>
               </td>
             </tr>
@@ -206,7 +212,7 @@ function App() {
               <td>:</td>
               <td>
                 <ul>
-                  {/* {PokemonDetail.types.map(val=><li>{val.type.name}</li>)} */}
+                  {PokemonDetail.types.map(val=><li>{val.type.name}</li>)}
                 </ul>
               </td>
             </tr>
