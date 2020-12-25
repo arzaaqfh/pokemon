@@ -188,7 +188,7 @@ function App() {
               <td>:</td>
               <td>
                 <ul>
-                  {PokemonDetail.moves.map(val=><li>{val.move.name}</li>)}
+                  {/* {PokemonDetail.moves.map(val=><li>{val.move.name}</li>)} */}
                 </ul>
               </td>
             </tr>
@@ -197,7 +197,7 @@ function App() {
               <td>:</td>
               <td>
                 <ul>
-                  {PokemonDetail.abilities.map(val=><li>{val.ability.name}</li>)}
+                  {/* {PokemonDetail.abilities.map(val=><li>{val.ability.name}</li>)} */}
                 </ul>
               </td>
             </tr>
@@ -206,7 +206,7 @@ function App() {
               <td>:</td>
               <td>
                 <ul>
-                  {PokemonDetail.types.map(val=><li>{val.type.name}</li>)}
+                  {/* {PokemonDetail.types.map(val=><li>{val.type.name}</li>)} */}
                 </ul>
               </td>
             </tr>
