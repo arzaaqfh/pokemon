@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getData } from './Pokemon';
-import { Navbar, Box, BoxDetail } from './style';
+import { Navbar, Box, BoxDetail, BoxImage, TableStyled, BtnDetail, BtnRelease } from './style';
 import {BrowserRouter, Switch, Route, Link} from 'react-router-dom';
 
 function App() {
@@ -127,27 +127,29 @@ function App() {
   function pokemonPage() {
     return(
       <Box>
-        <label><h1>Pokemon List</h1></label>
+        <center>
+          <label><h1>Pokemon List</h1></label>
+        </center>
         <div className='btn-group'>
-          {PrevList ? (<button onClick={prev}>Prev</button>) : (<></>) }
-          {NextList ? (<button onClick={next}>Next</button>) : (<></>) }
+          {PrevList ? (<button onClick={prev}>PREV</button>) : (<></>) }
+          {NextList ? (<button onClick={next}>NEXT</button>) : (<></>) }
         </div>
-        <table className="tbl">
-          <thead>
-              <tr>
-                <th>Name</th>
-                <th>Total Owned</th>
-                <th>Action</th>
-              </tr>
-          </thead>
+        <TableStyled>
+          <table>
+            <tr>
+              <th>Name</th>
+              <th>Total Owned</th>
+              <th>Action</th>
+            </tr>
             {Pokemon.map((pok, i) =>
               <tr key={pok.name}>
                 <td>{pok.name}</td>
                 <td>{MyPokemon.filter(val => val.name === pok.name).length}</td>
-                <td><Link to={'/pokemon/'+pok.name+';'}>Detail</Link></td>
+                <td><BtnDetail><Link to={'/pokemon/'+pok.name+';'}>Detail</Link></BtnDetail></td>
               </tr>
             )}
-        </table>
+          </table>
+        </TableStyled>
       </Box>
     );
   }
@@ -159,24 +161,13 @@ function App() {
       <>
       { Loading ? <h1>LOADING...</h1> :(
         <>
-        {ShowForm ? (
-          <Box>
-          <h1>Give The Pokemon Nickname</h1>
-          <form onSubmit={addMyPokemon}>
-            <label>Pokemon Nickname: </label>
-            <input name="nickname" type="text" ref={PokNickname} required/><br/>
-            
-            <button type='submit' className="btn-submit">Add</button>
-          </form>
-          </Box>
-        ) : null}
         <Box>
           <label><h1>Pokemon Detail</h1></label>
 
           <BoxDetail>
-            <div className='imageBox'>
+            <BoxImage>
               <img src={PokemonDetail.img} alt='Pokemon Pict'/>
-            </div>
+            </BoxImage>
             <table>
             {PokemonDetail.nickname !== '' ? (
               <tr>
@@ -233,6 +224,17 @@ function App() {
               <button onClick={catchPokemon}>Catch the Pokemon</button>
             ):(<></>)}
         </Box>
+        {ShowForm ? (
+          <Box>
+          <h1>Give The Pokemon Nickname</h1>
+          <form onSubmit={addMyPokemon}>
+            <label>Pokemon Nickname: </label>
+            <input name="nickname" type="text" ref={PokNickname} required/><br/>
+            
+            <button type='submit' className="btn-submit">Add</button>
+          </form>
+          </Box>
+        ) : null}
         </>
       )}        
       </>  
@@ -244,30 +246,30 @@ function App() {
     return(
       <Box>
       <div className="row">
-        <label><h1>My Pokemon List</h1></label>
+        <center>
+          <label><h1>My Pokemon List</h1></label>
+        </center>
 
         {MyPokemon.length === 0 ? (<p>Doesn't have any pokemon!</p>):(
-        <table className="tbl">
-          <thead>
+        <TableStyled>
+          <table>
             <tr>
               <th>Name</th>
               <th>Nickname</th>
               <th>Action</th>
             </tr>
-          </thead>
-          <tbody>
             {MyPokemon.map(pok => 
               <tr key={pok.id}>
                 <td>{pok.name}</td>
                 <td>{pok.nickname}</td>
                 <td>
-                  <Link to={'/pokemon/'+pok.name+';'+pok.nickname}>Detail</Link>
-                  <Link to={'/mypokemon'} className='btn-remove' onClick={releasePokemon.bind(this, pok)} >Release</Link>
+                  <BtnDetail><Link to={'/pokemon/'+pok.name+';'+pok.nickname}>Detail</Link></BtnDetail>
+                  <BtnRelease><Link to={'/mypokemon'} className='btn-remove' onClick={releasePokemon.bind(this, pok)} >Release</Link></BtnRelease>
                 </td>
               </tr>
             )}
-          </tbody>
-        </table>
+          </table>
+        </TableStyled>
         )}
       </div>
       </Box>
