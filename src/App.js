@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getData } from './Pokemon';
+import { Navbar, Box, BoxDetail } from './style';
 import {BrowserRouter, Switch, Route, Link} from 'react-router-dom';
-import './App.css';
 
 function App() {
   const [Pokemon, setPokemon] = useState( [] );
@@ -14,7 +14,7 @@ function App() {
   const [MyPokemon, setMyPokemon] = useState ( [{name: '', nickname: ''}] );
   const [PokemonDetail, setPokemonDetail] = useState( [{name: '', nickname: '', img: '', abilities: [], moves: [], height: '', weight: '', types: []}] );
   const [ShowForm, setShowForm] = useState(false);
-  
+
   useEffect(() => {
     const dataPokemonName = localStorage.getItem('pokemon-name');
     const dataPokemonDetail = localStorage.getItem('pokemon-detail');
@@ -126,7 +126,7 @@ function App() {
   //POKEMON PAGE
   function pokemonPage() {
     return(
-      <div className="row">
+      <Box>
         <label><h1>Pokemon List</h1></label>
         <div className='btn-group'>
           {PrevList ? (<button onClick={prev}>Prev</button>) : (<></>) }
@@ -148,7 +148,7 @@ function App() {
               </tr>
             )}
         </table>
-      </div>
+      </Box>
     );
   }
 
@@ -160,7 +160,7 @@ function App() {
       { Loading ? <h1>LOADING...</h1> :(
         <>
         {ShowForm ? (
-          <>
+          <Box>
           <h1>Give The Pokemon Nickname</h1>
           <form onSubmit={addMyPokemon}>
             <label>Pokemon Nickname: </label>
@@ -168,69 +168,71 @@ function App() {
             
             <button type='submit' className="btn-submit">Add</button>
           </form>
-          </>
+          </Box>
         ) : null}
+        <Box>
+          <label><h1>Pokemon Detail</h1></label>
 
-        <label><h1>Pokemon Detail</h1></label>
-        <div className='detailBox'>
-          <div className='imageBox'>
-            <img src={PokemonDetail.img} alt='Pokemon Pict'/>
-          </div>
-          <table>
-          {PokemonDetail.nickname !== '' ? (
-            <tr>
-              <td>Nickname</td>
-              <td>:</td>
-              <td>{PokemonDetail.nickname}</td>
-            </tr>
-          ):(<></>)}
-            <tr>
-              <td>Name</td>
-              <td>:</td>
-              <td>{PokemonDetail.name}</td>
-            </tr>
-            <tr>
-              <td>Move</td>
-              <td>:</td>
-              <td>
-                <ul>
-                  {PokemonDetail.moves.map(val=><li>{val.move.name}</li>)}
-                </ul>
-              </td>
-            </tr>
-            <tr>
-              <td>Abilities</td>
-              <td>:</td>
-              <td>
-                <ul>
-                  {PokemonDetail.abilities.map(val=><li>{val.ability.name}</li>)}
-                </ul>
-              </td>
-            </tr>
-            <tr>
-              <td>Type</td>
-              <td>:</td>
-              <td>
-                <ul>
-                  {PokemonDetail.types.map(val=><li>{val.type.name}</li>)}
-                </ul>
-              </td>
-            </tr>
-            <tr>
-              <td>Weight</td>
-              <td>:</td>
-              <td>{PokemonDetail.weight}</td>
-            </tr>
-            <tr>
-              <td>Height</td>
-              <td>:</td>
-              <td>{PokemonDetail.height}</td>
-            </tr>
-          </table>
-          {PokemonDetail.nickname === '' ? (
-            <button onClick={catchPokemon}>Catch the Pokemon</button>
-          ):(<></>)}          
-        </div>
+          <BoxDetail>
+            <div className='imageBox'>
+              <img src={PokemonDetail.img} alt='Pokemon Pict'/>
+            </div>
+            <table>
+            {PokemonDetail.nickname !== '' ? (
+              <tr>
+                <td>Nickname</td>
+                <td>:</td>
+                <td>{PokemonDetail.nickname}</td>
+              </tr>
+            ):(<></>)}
+              <tr>
+                <td>Name</td>
+                <td>:</td>
+                <td>{PokemonDetail.name}</td>
+              </tr>
+              <tr>
+                <td>Move</td>
+                <td>:</td>
+                <td>
+                  <ul>
+                    {PokemonDetail.moves.map(val=><li>{val.move.name}</li>)}
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Abilities</td>
+                <td>:</td>
+                <td>
+                  <ul>
+                    {PokemonDetail.abilities.map(val=><li>{val.ability.name}</li>)}
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Type</td>
+                <td>:</td>
+                <td>
+                  <ul>
+                    {PokemonDetail.types.map(val=><li>{val.type.name}</li>)}
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Weight</td>
+                <td>:</td>
+                <td>{PokemonDetail.weight}</td>
+              </tr>
+              <tr>
+                <td>Height</td>
+                <td>:</td>
+                <td>{PokemonDetail.height}</td>
+              </tr>
+            </table>
+          </BoxDetail>
+            {PokemonDetail.nickname === '' ? (
+              <button onClick={catchPokemon}>Catch the Pokemon</button>
+            ):(<></>)}
+        </Box>
         </>
       )}        
       </>  
@@ -240,7 +242,7 @@ function App() {
   //MY POKEMON PAGE
   function myPokemonPage() {
     return(
-      <>
+      <Box>
       <div className="row">
         <label><h1>My Pokemon List</h1></label>
         <table className="tbl">
@@ -265,7 +267,7 @@ function App() {
           </tbody>
         </table>
       </div>
-      </>
+      </Box>
     );
   }
 
@@ -273,12 +275,12 @@ function App() {
     <BrowserRouter>
     { Loading ? <h1>LOADING...</h1> :(
       <>
-      <nav>
+      <Navbar>
         <ul>
           <li><Link to='/'>Pokemon</Link></li>
           <li><Link to='/mypokemon'>My Pokemon</Link></li>
         </ul>
-      </nav>
+      </Navbar>
 
       <main>
         <Switch>
