@@ -82,6 +82,7 @@ export const BtnDetail = styled.button`
     background-color: #008CBA;        
     border: none;
     padding: 3px 3px 3px 3px;
+    box-shadow: 0 12px 16px 0 #0000003d, 0 17px 50px 0 rgba(0,0,0,0.19);
     a {
         color: #ffffff;
         text-align: center;
@@ -95,6 +96,7 @@ export const BtnRelease = styled.button`
     border: none;
     padding: 3px 3px 3px 3px;
     margin: 1px;
+    box-shadow: 0 12px 16px 0 #0000003d, 0 17px 50px 0 #00000030;
     a {
         color: #ffffff;
         text-align: center;
@@ -114,8 +116,38 @@ export const BtnCatch = styled.button`
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+    box-shadow: 0 12px 16px 0 #0000003d, 0 17px 50px 0 #00000030;
 `
-
+export const BtnPrev = styled.button`
+    background-color: #e7e7e7;        
+    border: none;
+    padding: 5px 5px 5px 5px;
+    box-shadow: 0 12px 16px 0 #0000003d, 0 17px 50px 0 #00000030;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+`
+export const BtnNext = styled.button`
+    background-color: #e7e7e7;
+    float: right;    
+    border: none;
+    padding: 5px 5px 5px 5px;
+    box-shadow: 0 12px 16px 0 #0000003d, 0 17px 50px 0 #00000030;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+`
+export const BtnNextPrevDisabled = styled.button`
+    background-color: #e7e7e7;        
+    border: none;
+    padding: 5px 5px 5px 5px;
+    box-shadow: 0 12px 16px 0 #0000003d, 0 17px 50px 0 #00000030;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    opacity: 0.6;
+    cursor: not-allowed;
+`
 export const InputBox = styled.div`
     input[type=text], select {
         width: 100%;
@@ -135,8 +167,14 @@ export const InputBox = styled.div`
         border: none;
         border-radius: 4px;
         cursor: pointer;
+        box-shadow: 0 12px 16px 0 #0000003d, 0 17px 50px 0 #00000030;
     }    
     input[type=submit]:hover {
         background-color: #45a049;
     }
+`
+export const BtnGroup = styled.div`
+    width: 35%;
+    height: 30px;
+    padding: 2px 2px 2px 2px;
 `

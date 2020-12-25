@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getData } from './Pokemon';
-import { Navbar, Box, BoxDetail, BoxImage, TableStyled, BtnDetail, BtnRelease, BtnCatch, InputBox } from './style';
+import { Navbar, Box, BoxDetail, BoxImage, TableStyled, BtnDetail, BtnRelease, BtnCatch, InputBox, BtnNext, BtnPrev, BtnNextPrevDisabled, BtnGroup } from './style';
 import {BrowserRouter, Switch, Route, Link} from 'react-router-dom';
 
 function App() {
@@ -129,11 +129,11 @@ function App() {
       <Box>
         <center>
           <label><h1>Pokemon List</h1></label>
+          <BtnGroup>
+            {PrevList ? (<BtnPrev onClick={prev}>PREV</BtnPrev>) : (<BtnNextPrevDisabled>PREV</BtnNextPrevDisabled>) }
+            {NextList ? (<BtnNext onClick={next}>NEXT</BtnNext>) : (<BtnNextPrevDisabled>NEXT</BtnNextPrevDisabled>) }
+          </BtnGroup>
         </center>
-        <div className='btn-group'>
-          {PrevList ? (<button onClick={prev}>PREV</button>) : (<></>) }
-          {NextList ? (<button onClick={next}>NEXT</button>) : (<></>) }
-        </div>
         <TableStyled>
           <table>
             <tr>
@@ -150,6 +150,12 @@ function App() {
             )}
           </table>
         </TableStyled>
+        <center>
+          <BtnGroup>
+            {PrevList ? (<BtnPrev onClick={prev}>PREV</BtnPrev>) : (<BtnNextPrevDisabled>PREV</BtnNextPrevDisabled>) }
+            {NextList ? (<BtnNext onClick={next}>NEXT</BtnNext>) : (<BtnNextPrevDisabled>NEXT</BtnNextPrevDisabled>) }
+          </BtnGroup>
+        </center>
       </Box>
     );
   }
