@@ -35,19 +35,21 @@ export const Box = styled.div`
     width: 300px;
     border: 3px solid #73AD21;
     padding: 10px;
-    box-shadow: 5px 3px #c2c2c2; 
+    box-shadow: 5px 3px #c2c2c2;
 `
 export const BoxDetail = styled.div`
     border-radius: 5px;
     margin: 60px auto;
     width: 240px;
     background-color: #ffffff;
-    border: 3px solid #464646;
     padding: 10px;
     box-shadow: 5px 3px #7e7e7e;
 `
+
 export const BoxImage = styled.div`
     margin: 5px auto;
+    width: 150px;
+    height: 150px;
     img{
         width: 100%;
         height: 100%;
@@ -100,4 +102,16 @@ export const BtnRelease = styled.button`
         display: inline-block;
         cursor: pointer;
     }
+`
+export const BtnCatch = styled.button`
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
 `
