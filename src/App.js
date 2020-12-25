@@ -99,7 +99,7 @@ function App() {
     
     if(cek === 0){
       setShowForm(false);
-      setMyPokemon([ ... MyPokemon, {
+      setMyPokemon([...MyPokemon, {
         name: PokemonDetail.name,
         nickname: PokNickname.current.value
       }])
@@ -168,7 +168,7 @@ function App() {
         <label><h1>Pokemon Detail</h1></label>
         <div className='detailBox'>
           <div className='imageBox'>
-            <img src={PokemonDetail.img} alt='Pokemon Image'/>
+            <img src={PokemonDetail.img} alt='Pokemon Pict'/>
           </div>
           <table>
           {PokemonDetail.nickname !== '' ? (
