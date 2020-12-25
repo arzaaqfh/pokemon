@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getData } from './Pokemon';
-import { Navbar, Box, BoxDetail, BoxImage, TableStyled, BtnDetail, BtnRelease, BtnCatch } from './style';
+import { Navbar, Box, BoxDetail, BoxImage, TableStyled, BtnDetail, BtnRelease, BtnCatch, InputBox } from './style';
 import {BrowserRouter, Switch, Route, Link} from 'react-router-dom';
 
 function App() {
@@ -229,14 +229,16 @@ function App() {
             ):(<></>)}
         </Box>
         {ShowForm ? (
-          <Box>
+        <Box>
+          <InputBox>
           <h1>Give The Pokemon Nickname</h1>
           <form onSubmit={addMyPokemon}>
             <label>Pokemon Nickname: </label>
             <input name="nickname" type="text" ref={PokNickname} required/><br/>
-            <button type='submit' className="btn-submit">Add</button>
+            <input type='submit' value='Add' />
           </form>
-          </Box>
+          </InputBox>
+        </Box>
         ) : null}
         </>
       )}        
