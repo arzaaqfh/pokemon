@@ -13,6 +13,7 @@ export const Navbar = styled.nav`
     }
     li {
         float: left;
+        width: 50%;
     }    
     li a {
         text-transform: uppercase;
@@ -33,7 +34,7 @@ export const Navbar = styled.nav`
 export const Box = styled.div`
     border-radius: 25px;
     margin: 60px auto;
-    width: 450px;
+    width: 300px;
     border: 3px solid #73AD21;
     padding: 10px;
     box-shadow: 5px 3px #c2c2c2; 
@@ -41,7 +42,7 @@ export const Box = styled.div`
 export const BoxDetail = styled.div`
     border-radius: 25px;
     margin: 60px auto;
-    width: 390px;
+    width: 240px;
     background-color: #9deb31;
     border: 5px solid #464646;
     padding: 10px;
