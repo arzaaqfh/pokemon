@@ -245,6 +245,8 @@ function App() {
       <Box>
       <div className="row">
         <label><h1>My Pokemon List</h1></label>
+
+        {MyPokemon.length === 0 ? (<p>Doesn't have any pokemon!</p>):(
         <table className="tbl">
           <thead>
             <tr>
@@ -266,6 +268,7 @@ function App() {
             )}
           </tbody>
         </table>
+        )}
       </div>
       </Box>
     );

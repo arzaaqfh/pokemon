@@ -27,9 +27,7 @@ export const Navbar = styled.nav`
     li a:hover:not(.active) {
         background-color: #73AD21;
     }    
-    .active {
-        background-color: #4CAF50;
-    }`
+    `
 
 export const Box = styled.div`
     border-radius: 25px;
