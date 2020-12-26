@@ -29,7 +29,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('pokemon-nickname', PokNickname);
-  }, [] );
+  }, [PokNickname] );
 
   useEffect(() => {
     localStorage.setItem('pokemon-detail', JSON.stringify(PokemonDetail));
@@ -37,11 +37,11 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
-  }, [] );
+  }, [MyPokemon] );
 
   useEffect(() => {
     localStorage.setItem('show-form', ShowForm);
-  }, [ClickAdd] );
+  }, [ClickAdd, ShowForm] );
   
   useEffect(() =>  {
     async function fetchData() {
@@ -109,7 +109,7 @@ function App() {
 
   const addMyPokemon = (e) => {
     e.preventDefault();
-    if(PokNickname != ''){
+    if(PokNickname !== ''){
       let cek = 0;
       if(MyPokemon !== null){
         cek = MyPokemon.filter(val => val.nickname === PokNickname).length;
