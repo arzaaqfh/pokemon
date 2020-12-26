@@ -12,7 +12,7 @@ function App() {
   const [PrevList, setPrevList] = useState( '' );
   const [Loading, setLoading] = useState(true);
   const Url = 'https://pokeapi.co/api/v2/pokemon';
-  const [PokemonName, setPokemonName] = useState( '' );
+  const [PokemonName, setPokemonName] = useState( 'bulbasaur' );
   const PokNickname = useRef ( null );
   const [MyPokemon, setMyPokemon] = useState ( [{name: '', nickname: ''}] );
   const [PokemonDetail, setPokemonDetail] = useState( [{name: '', nickname: '', img: '', abilities: [], moves: [], height: '', weight: '', types: []}] );
