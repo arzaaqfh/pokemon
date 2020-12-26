@@ -22,6 +22,7 @@ function App() {
     const dataPokemonName = window.localStorage.getItem('pokemon-name');
     const dataMyPokemon = window.localStorage.getItem('my-pokemon-data');
     const dataPokemonDetail = window.localStorage.getItem('pokemon-detail');
+    const dataShowForm = window.localStorage.getItem('form-add');
       
     if(dataPokemonDetail){
       setPokemonDetail(JSON.parse(dataPokemonDetail));
@@ -32,6 +33,8 @@ function App() {
     if(dataMyPokemon){
       setMyPokemon(JSON.parse(dataMyPokemon));
     }
+    
+    setShowForm(dataShowForm);
   }, [] );
 
   useEffect(() => {
@@ -44,7 +47,11 @@ function App() {
   
   useEffect(() => {
     window.localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
-  }, [MyPokemon])
+  }, [MyPokemon]);
+
+  useEffect(() => {
+    window.localStorage.setItem('form-add', ShowForm);
+  }, [ShowForm]);
 
   useEffect(() =>  {
     async function fetchData() {
@@ -107,15 +114,14 @@ function App() {
     let cek = MyPokemon.filter(val => val.nickname === PokNickname.current.value).length;
     
     if(cek === 0){
-      setShowForm(false);
       setMyPokemon([...MyPokemon, {
         name: PokemonDetail.name,
         nickname: PokNickname.current.value
       }])
       PokNickname.current.value = '';
+      setShowForm(false);
       alert('The pokemon is added!');
     }else{
-      setShowForm(true);
       alert('Nickname is already exist!');
     }
 
