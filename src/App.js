@@ -36,15 +36,15 @@ function App() {
 
   useEffect(() => {
     window.localStorage.setItem('pokemon-name', PokemonName);
-  }, ['pokemon-name', PokemonName]);
+  }, [PokemonName]);
   
   useEffect(() => {
     window.localStorage.setItem('pokemon-detail', JSON.stringify(PokemonDetail));
-  }, ['pokemon-detail', PokemonDetail]);
+  }, [PokemonDetail]);
   
   useEffect(() => {
     window.localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
-  }, ['my-pokemon-data', MyPokemon])
+  }, [MyPokemon])
 
   useEffect(() =>  {
     async function fetchData() {
