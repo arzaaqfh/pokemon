@@ -35,7 +35,6 @@ export const Box = styled.div`
     width: 300px;
     border: 3px solid #73AD21;
     padding: 10px;
-    box-shadow: 5px 3px #c2c2c2;
 `
 export const BoxDetail = styled.div`
     border-radius: 5px;
@@ -43,7 +42,7 @@ export const BoxDetail = styled.div`
     width: 240px;
     background-color: #ffffff;
     padding: 10px;
-    box-shadow: 5px 3px #7e7e7e;
+    box-shadow: 0 12px 16px 0 #0000003d,0 17px 50px 0 rgba(0,0,0,0.19);
     .labelBox{
         background-color: #4CAF50;
         color: white;
@@ -200,9 +199,12 @@ export const GridContainer = styled.div`
     grid-template-columns: auto auto auto;
     padding: 8px;
     > div {
-        background-color: rgba(255, 255, 255, 0.8);
+        background-color: #e7e7e7;
+        text-transform: uppercase;
+        margin-right: 5px;
+        margin-bottom: 5px;
         text-align: center;
-        font-size: 12px;
-        border: 1px solid #111;
+        font-size: 10px;
+        border-radius: 5px;
     }
 `

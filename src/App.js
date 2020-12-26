@@ -170,8 +170,9 @@ function App() {
       { Loading ? <h1>LOADING...</h1> :(
         <>
         <Box>
-          <label><h1>Pokemon Detail</h1></label>
-
+          <center>
+            <label><h1>Pokemon Detail</h1></label>
+          </center>
           <BoxDetail>
             <BoxImage>
               <img src={PokemonDetail.img} alt='Pokemon Pict'/>
