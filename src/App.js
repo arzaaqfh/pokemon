@@ -251,7 +251,7 @@ function App() {
               <div className="modal-content">
                 <h1>Give The Pokemon Nickname</h1><br/>
                 <form onSubmit={addMyPokemon}>
-                  <input type="text" placeholder='Put the nickname here' pattern="[0-9][A-Za-z]*" value={PokNickname} title="Symbol are not allowed!" required/><br/>
+                  <input type="text" placeholder='Put the nickname here' pattern="[0-9][A-Za-z]*" value={PokNickname} to={ChangeNickname} title="Symbol are not allowed!" required/><br/>
                   <input type='submit' value='ADD'/>
                 </form>
               </div>
