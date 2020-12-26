@@ -235,16 +235,17 @@ function App() {
               ):(<></>)}
           </Box>
           {ShowForm ? (
-          <Box>
-            <InputBox>
-            <h1>Give The Pokemon Nickname</h1>
-            <form onSubmit={addMyPokemon}>
-              <label>Pokemon Nickname: </label>
-              <input name="nickname" type="text" ref={PokNickname} required/><br/>
-              <input type='submit' value='ADD' />
-            </form>
-            </InputBox>
-          </Box>
+          <InputBox>
+            <div id="myModal" className="modal">
+              <div className="modal-content">
+                <h1>Give The Pokemon Nickname</h1><br/>
+                <form onSubmit={addMyPokemon}>
+                  <input name="nickname" type="text" ref={PokNickname} placeholder='Put the nickname here' required/><br/>
+                  <input type='submit' value='ADD' />
+                </form>
+              </div>
+          </div>
+          </InputBox>
           ) : null}
           </>
         )}        

@@ -188,6 +188,26 @@ export const InputBox = styled.div`
     input[type=submit]:hover {
         background-color: #45a049;
     }
+    .modal {
+        display: block; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: #000000;
+        background-color: #00000066;
+    }
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 300px;
+    }
 `
 export const BtnGroup = styled.div`
     width: 35%;
