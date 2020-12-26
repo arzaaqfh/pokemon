@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { getData } from './Pokemon';
 import { Navbar, Box, BoxDetail, BoxImage, TableStyled, 
   BtnDetail, BtnRelease, BtnCatch, InputBox, BtnNext, 
-  BtnPrev, BtnNextPrevDisabled, BtnGroup, GridContainer } from './style';
+  BtnPrev, BtnNextPrevDisabled, BtnGroup, GridContainer,
+  BoxInfo, BoxWarning } from './style';
 import {BrowserRouter, Switch, Route, Link} from 'react-router-dom';
 
 function App() {
@@ -227,7 +228,7 @@ function App() {
             {PokemonDetail.nickname === '' ? (
               <center>
                 <BtnCatch onClick={catchPokemon}>
-                  Catch the Pokemon
+                  Catch The Pokemon
                 </BtnCatch>
               </center>
             ):(<></>)}
@@ -259,7 +260,24 @@ function App() {
           <label><h1>My Pokemon List</h1></label>
         </center>
 
-        {MyPokemon.length === 0 ? (<p>Doesn't have any pokemon!</p>):(
+        {MyPokemon.length === 0 ? (
+          <>
+          <BoxWarning>
+            <p><b>Doesn't have any pokemon!</b></p>
+          </BoxWarning>
+          <BoxInfo>
+            <p>
+              <b>How to catch the pokemon?</b><br/>
+              <ul>
+                <li>Go to the pokemon page</li>
+                <li>Choose the pokemon and click <b>Detail</b></li>
+                <li>From the detail page you can catch the pokemon by clicking <b>Catch The Pokemon</b></li>
+                <li>If <b>Catch The Pokemon SUCCESS</b> then put nickname for the pokemon and click <b>ADD</b></li>
+              </ul>
+            </p>
+          </BoxInfo>
+          </>
+          ):(
         <TableStyled>
           <table>
             <tr>

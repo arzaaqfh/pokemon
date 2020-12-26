@@ -208,3 +208,21 @@ export const GridContainer = styled.div`
         border-radius: 5px;
     }
 `
+export const BoxInfo = styled.p`
+    padding: 20px;
+    color: white;
+    opacity: 1;
+    transition: opacity 0.6s;
+    margin-bottom: 15px;
+    background-color: #2196F3;
+    border-radius: 5px;
+`
+export const BoxWarning = styled.p`
+    padding: 20px;
+    color: white;
+    opacity: 1;
+    transition: opacity 0.6s;
+    margin-bottom: 15px;
+    background-color: #ff9800;
+    border-radius: 5px;
+`
