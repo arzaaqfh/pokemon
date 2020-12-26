@@ -4,7 +4,7 @@ import { Navbar, Box, BoxDetail, BoxImage, TableStyled,
   BtnDetail, BtnRelease, BtnCatch, InputBox, BtnNext, 
   BtnPrev, BtnNextPrevDisabled, BtnGroup, GridContainer,
   BoxInfo, BoxWarning } from './style';
-import {BrowserRouter, Switch, Route, Redirect, Link} from 'react-router-dom';
+import {BrowserRouter, Switch, Route, Link} from 'react-router-dom';
 
 window.onbeforeunload = function() {
   localStorage.clear();
@@ -25,11 +25,11 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('pokemon-name', PokemonName);
-  }, [PokemonName]);
+  }, [PokemonName] );
 
   useEffect(() => {
     localStorage.setItem('pokemon-nickname', PokNickname);
-  }, []);
+  }, [] );
 
   useEffect(() => {
     localStorage.setItem('pokemon-detail', JSON.stringify(PokemonDetail));
@@ -37,11 +37,11 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
-  }, []);
+  }, [] );
 
   useEffect(() => {
     localStorage.setItem('show-form', ShowForm);
-  }, [ClickAdd]);
+  }, [ClickAdd] );
   
   useEffect(() =>  {
     async function fetchData() {
