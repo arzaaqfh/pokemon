@@ -20,14 +20,14 @@ function App() {
 
   useEffect(() => {
     const dataPokemonName = localStorage.getItem('pokemon-name');
-    const dataPokemonDetail = localStorage.getItem('pokemon-detail');
     const dataMyPokemon = localStorage.getItem('my-pokemon-data');
-
-    if(dataPokemonName){
-      setPokemonName(dataPokemonName);
-    }
+    const dataPokemonDetail = localStorage.getItem('pokemon-detail');
+      
     if(dataPokemonDetail){
       setPokemonDetail(JSON.parse(dataPokemonDetail));
+    }
+    if(dataPokemonName){
+      setPokemonName(dataPokemonName);
     }
     if(dataMyPokemon){
       setMyPokemon(JSON.parse(dataMyPokemon));
@@ -245,9 +245,7 @@ function App() {
         </>  
       );
     }else{      
-      localStorage.setItem('pokemon-detail', JSON.stringify(PokemonDetail));
-      localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
-      localStorage.setItem('pokemon-name', PokemonName);
+      return null
     }
   }
 
