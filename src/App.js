@@ -244,8 +244,10 @@ function App() {
         )}        
         </>  
       );
-    }else{
-      return null
+    }else{      
+      localStorage.setItem('pokemon-detail', JSON.stringify(PokemonDetail));
+      localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
+      localStorage.setItem('pokemon-name', PokemonName);
     }
   }
 
