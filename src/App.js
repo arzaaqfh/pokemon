@@ -18,11 +18,21 @@ function App() {
   const [PokemonDetail, setPokemonDetail] = useState( [{name: '', nickname: '', img: '', abilities: [], moves: [], height: '', weight: '', types: []}] );
   const [ShowForm, setShowForm] = useState(false);
 
+  useEffect(() =>  {
+    async function fetchData() {
+      let data = await getData(Url);
+      setNextList(data.next);
+      setPrevList(data.previous);
+      setPokemon(data.results);
+      setLoading(false);
+    }
+    fetchData();
+  }, [] );
+
   useEffect(() => {
     const dataPokemonName = window.localStorage.getItem('pokemon-name');
     const dataMyPokemon = window.localStorage.getItem('my-pokemon-data');
     const dataPokemonDetail = window.localStorage.getItem('pokemon-detail');
-    const dataShowForm = window.localStorage.getItem('form-add');
       
     if(dataPokemonDetail){
       setPokemonDetail(JSON.parse(dataPokemonDetail));
@@ -33,7 +43,6 @@ function App() {
     if(dataMyPokemon){
       setMyPokemon(JSON.parse(dataMyPokemon));
     }
-    setShowForm(dataShowForm);
   }, [] );
 
   useEffect(() => {
@@ -48,21 +57,6 @@ function App() {
     window.localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
   }, [MyPokemon]);
 
-  useEffect(() => {
-    window.localStorage.setItem('form-add', ShowForm);
-  }, [ShowForm]);
-
-  useEffect(() =>  {
-    async function fetchData() {
-      let data = await getData(Url);
-      setNextList(data.next);
-      setPrevList(data.previous);
-      setPokemon(data.results);
-      setLoading(false);
-    }
-    fetchData();
-  }, [] );
-  
   useEffect(() => {
     if(PokemonName !== ''){
       let name = PokemonName.split(';');
