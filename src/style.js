@@ -44,6 +44,16 @@ export const BoxDetail = styled.div`
     background-color: #ffffff;
     padding: 10px;
     box-shadow: 5px 3px #7e7e7e;
+    .labelBox{
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+    }
+    .labelVal{
+        text-transform: capitalize;
+        margin-bottom: 8px;
+        padding-left: 8px;
+    }
 `
 
 export const BoxImage = styled.div`
@@ -79,6 +89,7 @@ export const TableStyled = styled.table`
     }
 `
 export const BtnDetail = styled.button`
+    outline: none;
     background-color: #008CBA;        
     border: none;
     padding: 3px 3px 3px 3px;
@@ -92,6 +103,7 @@ export const BtnDetail = styled.button`
     }
 `
 export const BtnRelease = styled.button`
+    outline: none;
     background-color: #f44336;        
     border: none;
     padding: 3px 3px 3px 3px;
@@ -106,7 +118,8 @@ export const BtnRelease = styled.button`
     }
 `
 export const BtnCatch = styled.button`
-    background-color: #4CAF50; /* Green */
+    outline: none;
+    background-color: #4CAF50;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -119,6 +132,7 @@ export const BtnCatch = styled.button`
     box-shadow: 0 12px 16px 0 #0000003d, 0 17px 50px 0 #00000030;
 `
 export const BtnPrev = styled.button`
+    outline: none;
     background-color: #e7e7e7;        
     border: none;
     padding: 5px 5px 5px 5px;
@@ -128,6 +142,7 @@ export const BtnPrev = styled.button`
     cursor: pointer;
 `
 export const BtnNext = styled.button`
+    outline: none;
     background-color: #e7e7e7;
     float: right;    
     border: none;
@@ -138,6 +153,7 @@ export const BtnNext = styled.button`
     cursor: pointer;
 `
 export const BtnNextPrevDisabled = styled.button`
+    outline: none;
     background-color: #e7e7e7;        
     border: none;
     padding: 5px 5px 5px 5px;
@@ -159,6 +175,7 @@ export const InputBox = styled.div`
         box-sizing: border-box;
     }    
     input[type=submit] {
+        outline: none;
         width: 100%;
         background-color: #4CAF50;
         color: white;
@@ -177,4 +194,15 @@ export const BtnGroup = styled.div`
     width: 35%;
     height: 30px;
     padding: 2px 2px 2px 2px;
+`
+export const GridContainer = styled.div`
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 8px;
+    > div {
+        background-color: rgba(255, 255, 255, 0.8);
+        text-align: center;
+        font-size: 12px;
+        border: 1px solid #111;
+    }
 `

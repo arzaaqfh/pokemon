@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getData } from './Pokemon';
-import { Navbar, Box, BoxDetail, BoxImage, TableStyled, BtnDetail, BtnRelease, BtnCatch, InputBox, BtnNext, BtnPrev, BtnNextPrevDisabled, BtnGroup } from './style';
+import { Navbar, Box, BoxDetail, BoxImage, TableStyled, 
+  BtnDetail, BtnRelease, BtnCatch, InputBox, BtnNext, 
+  BtnPrev, BtnNextPrevDisabled, BtnGroup, GridContainer } from './style';
 import {BrowserRouter, Switch, Route, Link} from 'react-router-dom';
 
 function App() {
@@ -174,57 +176,52 @@ function App() {
             <BoxImage>
               <img src={PokemonDetail.img} alt='Pokemon Pict'/>
             </BoxImage>
-            <table>
             {PokemonDetail.nickname !== '' ? (
-              <tr>
-                <td>Nickname</td>
-                <td>:</td>
-                <td>{PokemonDetail.nickname}</td>
-              </tr>
+              <>
+              <div className='labelBox'>  
+                <label><b>Nickname</b></label>
+              </div>
+              <div className='labelVal'>
+                {PokemonDetail.nickname}
+              </div>
+              </>
             ):(<></>)}
-              <tr>
-                <td>Name</td>
-                <td>:</td>
-                <td>{PokemonDetail.name}</td>
-              </tr>
-              <tr>
-                <td>Move</td>
-                <td>:</td>
-                <td>
-                  <ul>
-                    {PokemonDetail.moves.map(val=><li>{val.move.name}</li>)}
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td>Abilities</td>
-                <td>:</td>
-                <td>
-                  <ul>
-                    {PokemonDetail.abilities.map(val=><li>{val.ability.name}</li>)}
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td>Type</td>
-                <td>:</td>
-                <td>
-                  <ul>
-                    {PokemonDetail.types.map(val=><li>{val.type.name}</li>)}
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td>Weight</td>
-                <td>:</td>
-                <td>{PokemonDetail.weight}</td>
-              </tr>
-              <tr>
-                <td>Height</td>
-                <td>:</td>
-                <td>{PokemonDetail.height}</td>
-              </tr>
-            </table>
+            <div className='labelBox'>
+              <label><b>Name</b></label>
+            </div>
+            <div className='labelVal'>
+              {PokemonDetail.name}
+            </div>
+            <div className='labelBox'>
+              <label><b>Moves</b></label>
+            </div>
+            <GridContainer>
+              {PokemonDetail.moves.map(val=><div>{val.move.name}</div>)}
+            </GridContainer>
+            <div className='labelBox'>
+              <label><b>Abilities</b></label>
+            </div>
+            <GridContainer>
+              {PokemonDetail.abilities.map(val=><div>{val.ability.name}</div>)}
+            </GridContainer>
+            <div className='labelBox'> 
+              <label><b>Types</b></label>
+            </div>
+            <GridContainer>
+              {PokemonDetail.types.map(val=><div>{val.type.name}</div>)}
+            </GridContainer>
+            <div className='labelBox'>
+              <label><b>Weight</b></label>
+            </div>
+            <div className='labelVal'>
+              {PokemonDetail.weight}
+            </div>
+            <div className='labelBox'>
+              <label><b>Height</b></label>
+            </div>
+            <div className='labelVal'>
+              {PokemonDetail.height}
+            </div>
           </BoxDetail>
             {PokemonDetail.nickname === '' ? (
               <center>
