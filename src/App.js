@@ -12,22 +12,11 @@ function App() {
   const [PrevList, setPrevList] = useState( '' );
   const [Loading, setLoading] = useState(true);
   const Url = 'https://pokeapi.co/api/v2/pokemon';
-  const [PokemonName, setPokemonName] = useState( '' );
+  const [PokemonName, setPokemonName] = useState( 'pikachu' );
   const PokNickname = useRef ( null );
   const [MyPokemon, setMyPokemon] = useState ( [] );
   const [PokemonDetail, setPokemonDetail] = useState( [{name: '', nickname: '', img: '', abilities: [], moves: [], height: '', weight: '', types: []}] );
   const [ShowForm, setShowForm] = useState(false);
-
-  useEffect(() =>  {
-    async function fetchData() {
-      let data = await getData(Url);
-      setNextList(data.next);
-      setPrevList(data.previous);
-      setPokemon(data.results);
-      setLoading(false);
-    }
-    fetchData();
-  }, [] );
 
   useEffect(() => {
     const dataPokemonName = window.localStorage.getItem('pokemon-name');
@@ -57,6 +46,17 @@ function App() {
     window.localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
   }, [MyPokemon]);
 
+  useEffect(() =>  {
+    async function fetchData() {
+      let data = await getData(Url);
+      setNextList(data.next);
+      setPrevList(data.previous);
+      setPokemon(data.results);
+      setLoading(false);
+    }
+    fetchData();
+  }, [] );
+  
   useEffect(() => {
     if(PokemonName !== ''){
       let name = PokemonName.split(';');
