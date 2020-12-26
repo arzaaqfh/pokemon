@@ -14,9 +14,9 @@ function App() {
   const Url = 'https://pokeapi.co/api/v2/pokemon';
   const [PokemonName, setPokemonName] = useState( '' );
   const PokNickname = useRef ( null );
-  const [MyPokemon, setMyPokemon] = useState ( [{name: '', nickname: ''}] );
+  const [MyPokemon, setMyPokemon] = useState ( [] );
   const [PokemonDetail, setPokemonDetail] = useState( [{name: '', nickname: '', img: '', abilities: [], moves: [], height: '', weight: '', types: []}] );
-  const [ShowForm, setShowForm] = useState( null );
+  const [ShowForm, setShowForm] = useState(false);
 
   useEffect(() => {
     const dataPokemonName = window.localStorage.getItem('pokemon-name');
@@ -33,9 +33,7 @@ function App() {
     if(dataMyPokemon){
       setMyPokemon(JSON.parse(dataMyPokemon));
     }
-    if(dataShowForm){
-      setShowForm(dataShowForm);
-    }
+    setShowForm(dataShowForm);
   }, [] );
 
   useEffect(() => {
@@ -154,7 +152,9 @@ function App() {
             {Pokemon.map((pok, i) =>
               <tr key={pok.name}>
                 <td>{pok.name}</td>
-                <td>{MyPokemon.filter(val => val.name === pok.name).length}</td>
+                <td>
+                  {MyPokemon.filter(val => val.name === pok.name).length}
+                </td>
                 <td><BtnDetail><Link to={'/pokemon/'+pok.name+';'}>Detail</Link></BtnDetail></td>
               </tr>
             )}
