@@ -19,9 +19,9 @@ function App() {
   const [ShowForm, setShowForm] = useState(false);
 
   useEffect(() => {
-    const dataPokemonName = localStorage.getItem('pokemon-name');
-    const dataMyPokemon = localStorage.getItem('my-pokemon-data');
-    const dataPokemonDetail = localStorage.getItem('pokemon-detail');
+    const dataPokemonName = window.localStorage.getItem('pokemon-name');
+    const dataMyPokemon = window.localStorage.getItem('my-pokemon-data');
+    const dataPokemonDetail = window.localStorage.getItem('pokemon-detail');
       
     if(dataPokemonDetail){
       setPokemonDetail(JSON.parse(dataPokemonDetail));
@@ -35,10 +35,16 @@ function App() {
   }, [] );
 
   useEffect(() => {
-    localStorage.setItem('pokemon-detail', JSON.stringify(PokemonDetail));
-    localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
-    localStorage.setItem('pokemon-name', PokemonName);
-  } );
+    window.localStorage.setItem('pokemon-name', PokemonName);
+  }, ['pokemon-name', PokemonName]);
+  
+  useEffect(() => {
+    window.localStorage.setItem('pokemon-detail', JSON.stringify(PokemonDetail));
+  }, ['pokemon-detail', PokemonDetail]);
+  
+  useEffect(() => {
+    window.localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
+  }, ['my-pokemon-data', MyPokemon])
 
   useEffect(() =>  {
     async function fetchData() {
@@ -251,54 +257,58 @@ function App() {
 
   //MY POKEMON PAGE
   function myPokemonPage() {
-    return(
-      <Box>
-      <div className="row">
-        <center>
-          <label><h1>My Pokemon List</h1></label>
-        </center>
+    if(MyPokemon){
+      return(
+        <Box>
+        <div className="row">
+          <center>
+            <label><h1>My Pokemon List</h1></label>
+          </center>
 
-        {MyPokemon.length === 0 ? (
-          <>
-          <BoxWarning>
-            <p><b>Doesn't have any pokemon!</b></p>
-          </BoxWarning>
-          <BoxInfo>
-            <p>
-              <b>How to catch the pokemon?</b><br/>
-              <ul>
-                <li>Go to the pokemon page</li>
-                <li>Choose the pokemon and click <b>Detail</b></li>
-                <li>From the detail page you can catch the pokemon by clicking <b>Catch The Pokemon</b></li>
-                <li>If <b>Catch The Pokemon SUCCESS</b> then put nickname for the pokemon and click <b>ADD</b></li>
-              </ul>
-            </p>
-          </BoxInfo>
-          </>
-          ):(
-        <TableStyled>
-          <table>
-            <tr>
-              <th>Name</th>
-              <th>Nickname</th>
-              <th>Action</th>
-            </tr>
-            {MyPokemon.map(pok => 
-              <tr key={pok.id}>
-                <td>{pok.name}</td>
-                <td>{pok.nickname}</td>
-                <td>
-                  <BtnDetail><Link to={'/pokemon/'+pok.name+';'+pok.nickname}>Detail</Link></BtnDetail>
-                  <BtnRelease><Link to={'/mypokemon'} className='btn-remove' onClick={releasePokemon.bind(this, pok)} >Release</Link></BtnRelease>
-                </td>
+          {MyPokemon.length === 0 ? (
+            <>
+            <BoxWarning>
+              <p><b>Doesn't have any pokemon!</b></p>
+            </BoxWarning>
+            <BoxInfo>
+              <p>
+                <b>How to catch the pokemon?</b><br/>
+                <ul>
+                  <li>Go to the pokemon page</li>
+                  <li>Choose the pokemon and click <b>Detail</b></li>
+                  <li>From the detail page you can catch the pokemon by clicking <b>Catch The Pokemon</b></li>
+                  <li>If <b>Catch The Pokemon SUCCESS</b> then put nickname for the pokemon and click <b>ADD</b></li>
+                </ul>
+              </p>
+            </BoxInfo>
+            </>
+            ):(
+          <TableStyled>
+            <table>
+              <tr>
+                <th>Name</th>
+                <th>Nickname</th>
+                <th>Action</th>
               </tr>
-            )}
-          </table>
-        </TableStyled>
-        )}
-      </div>
-      </Box>
-    );
+              {MyPokemon.map(pok => 
+                <tr key={pok.id}>
+                  <td>{pok.name}</td>
+                  <td>{pok.nickname}</td>
+                  <td>
+                    <BtnDetail><Link to={'/pokemon/'+pok.name+';'+pok.nickname}>Detail</Link></BtnDetail>
+                    <BtnRelease><Link to={'/mypokemon'} className='btn-remove' onClick={releasePokemon.bind(this, pok)} >Release</Link></BtnRelease>
+                  </td>
+                </tr>
+              )}
+            </table>
+          </TableStyled>
+          )}
+        </div>
+        </Box>
+      );
+    }else{
+      return null
+    }
   }
 
   return (
