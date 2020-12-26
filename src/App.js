@@ -1,10 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getData } from './Pokemon';
 import { Navbar, Box, BoxDetail, BoxImage, TableStyled, 
   BtnDetail, BtnRelease, BtnCatch, InputBox, BtnNext, 
   BtnPrev, BtnNextPrevDisabled, BtnGroup, GridContainer,
   BoxInfo, BoxWarning } from './style';
-import {BrowserRouter, Switch, Route, Link} from 'react-router-dom';
+import {BrowserRouter, Switch, Route, Redirect, Link} from 'react-router-dom';
+
+window.onbeforeunload = function() {
+  localStorage.clear();
+}
 
 function App() {
   const [Pokemon, setPokemon] = useState( [] );
@@ -12,40 +16,33 @@ function App() {
   const [PrevList, setPrevList] = useState( '' );
   const [Loading, setLoading] = useState(true);
   const Url = 'https://pokeapi.co/api/v2/pokemon';
-  const [PokemonName, setPokemonName] = useState( 'pikachu' );
-  const PokNickname = useRef ( null );
-  const [MyPokemon, setMyPokemon] = useState ( [] );
-  const [PokemonDetail, setPokemonDetail] = useState( [{name: '', nickname: '', img: '', abilities: [], moves: [], height: '', weight: '', types: []}] );
-  const [ShowForm, setShowForm] = useState(false);
+  const [PokemonName, setPokemonName] = useState( localStorage.getItem('pokemon-name') );
+  const [PokNickname, setPokNickName] = useState ( localStorage.getItem('pokemon-nickname') );
+  const [MyPokemon, setMyPokemon] = useState ( localStorage.getItem('my-pokemon-data') );
+  const [PokemonDetail, setPokemonDetail] = useState( localStorage.getItem('pokemon-detail') );
+  const [ShowForm, setShowForm] = useState( localStorage.getItem('show-form') );
+  const [ClickAdd, setClickAdd] = useState( 0 );
 
   useEffect(() => {
-    const dataPokemonName = window.localStorage.getItem('pokemon-name');
-    const dataMyPokemon = window.localStorage.getItem('my-pokemon-data');
-    const dataPokemonDetail = window.localStorage.getItem('pokemon-detail');
-      
-    if(dataPokemonDetail){
-      setPokemonDetail(JSON.parse(dataPokemonDetail));
-    }
-    if(dataPokemonName){
-      setPokemonName(dataPokemonName);
-    }
-    if(dataMyPokemon){
-      setMyPokemon(JSON.parse(dataMyPokemon));
-    }
-  }, [] );
-
-  useEffect(() => {
-    window.localStorage.setItem('pokemon-name', PokemonName);
+    localStorage.setItem('pokemon-name', PokemonName);
   }, [PokemonName]);
-  
-  useEffect(() => {
-    window.localStorage.setItem('pokemon-detail', JSON.stringify(PokemonDetail));
-  }, [PokemonDetail]);
-  
-  useEffect(() => {
-    window.localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
-  }, [MyPokemon]);
 
+  useEffect(() => {
+    localStorage.setItem('pokemon-nickname', PokNickname);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('pokemon-detail', JSON.stringify(PokemonDetail));
+  }, [PokemonDetail]);
+
+  useEffect(() => {
+    localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('show-form', ShowForm);
+  }, [ClickAdd]);
+  
   useEffect(() =>  {
     async function fetchData() {
       let data = await getData(Url);
@@ -58,7 +55,7 @@ function App() {
   }, [] );
   
   useEffect(() => {
-    if(PokemonName !== ''){
+    if(PokemonName){
       let name = PokemonName.split(';');
       let data = getData(Url+'/'+name[0]);
       
@@ -95,31 +92,44 @@ function App() {
 
   function catchPokemon() {
     var catchPok = Boolean(Math.round(0 + Math.random() * (1 - 0)));
+    setClickAdd(1);
     setShowForm(catchPok);
-    return(
-      <>
-      { catchPok ? alert('Catch pokemon SUCCESS') : alert('Catch pokemon FAILED')} 
-      </>
-    )  
-  }
-
-  const addMyPokemon = () => {
-    let cek = MyPokemon.filter(val => val.nickname === PokNickname.current.value).length;
     
-    if(cek === 0){
-      setMyPokemon([...MyPokemon, {
-        name: PokemonDetail.name,
-        nickname: PokNickname.current.value
-      }])
-      PokNickname.current.value = '';
-      setShowForm(false);
-      alert('The pokemon is added!');
+    localStorage.setItem('click add: ',ClickAdd);
+    if(catchPok){
+      return alert('Catch pokemon SUCCESS')
     }else{
-      alert('Nickname is already exist!');
+      return alert('Catch pokemon FAILED')
     }
-
   }
 
+  const ChangeNickname = (e) => {
+    setPokNickName(e.target.value);
+  }
+
+  const addMyPokemon = (e) => {
+    e.preventDefault();
+    if(PokNickname != ''){
+      let cek = 0;
+      if(MyPokemon !== null){
+        cek = MyPokemon.filter(val => val.nickname === PokNickname).length;
+      }
+
+      if(cek === 0){ 
+        setMyPokemon([...MyPokemon, {
+          name: PokemonDetail.name,
+          nickname: PokNickname
+        }])
+        setPokNickName('');
+        setShowForm(false);    
+        alert('The pokemon is added!');
+      }else{
+        alert('Nickname is already exist!');
+      }
+    }else{
+      return alert('Symbol is not allowed!');
+    }
+  }
   const releasePokemon = (data) => {
     let newData  = MyPokemon.filter(val => { return val.nickname !== data.nickname});
     setMyPokemon(newData);    
@@ -147,7 +157,7 @@ function App() {
               <tr key={pok.name}>
                 <td>{pok.name}</td>
                 <td>
-                  {MyPokemon.filter(val => val.name === pok.name).length}
+                  {MyPokemon ? (MyPokemon.filter(val => val.name === pok.name).length):(0)}
                 </td>
                 <td><BtnDetail><Link to={'/pokemon/'+pok.name+';'}>Detail</Link></BtnDetail></td>
               </tr>
@@ -241,8 +251,8 @@ function App() {
               <div className="modal-content">
                 <h1>Give The Pokemon Nickname</h1><br/>
                 <form onSubmit={addMyPokemon}>
-                  <input name="nickname" type="text" ref={PokNickname} placeholder='Put the nickname here' required/><br/>
-                  <input type='submit' value='ADD' />
+                  <input type="text" placeholder='Put the nickname here' pattern="[0-9][A-Za-z]*" value={PokNickname} title="Symbol are not allowed!" required/><br/>
+                  <input type='submit' value='ADD'/>
                 </form>
               </div>
           </div>
@@ -259,60 +269,56 @@ function App() {
 
   //MY POKEMON PAGE
   function myPokemonPage() {
-    if(MyPokemon){
-      return(
-        <Box>
-        <div className="row">
-          <center>
-            <label><h1>My Pokemon List</h1></label>
-          </center>
-
-          {MyPokemon.length === 0 ? (
-            <>
-            <BoxWarning>
-              <p><b>Doesn't have any pokemon!</b></p>
-            </BoxWarning>
-            <BoxInfo>
-              <p>
-                <b>How to catch the pokemon?</b><br/>
-                <ul>
-                  <li>Go to the pokemon page</li>
-                  <li>Choose the pokemon and click <b>Detail</b></li>
-                  <li>From the detail page you can catch the pokemon by clicking <b>Catch The Pokemon</b></li>
-                  <li>If <b>Catch The Pokemon SUCCESS</b> then put nickname for the pokemon and click <b>ADD</b></li>
-                </ul>
-              </p>
-            </BoxInfo>
-            </>
-            ):(
-          <TableStyled>
-            <table>
-              <tr>
-                <th>Name</th>
-                <th>Nickname</th>
-                <th>Action</th>
+    return(
+      <Box>
+      <div className="row">
+        <center>
+          <label><h1>My Pokemon List</h1></label>
+        </center>
+        
+        {MyPokemon === null || MyPokemon.length === 0 ? (
+          <>
+          <BoxWarning>
+            <p><b>Doesn't have any pokemon!</b></p>
+          </BoxWarning>
+          <BoxInfo>
+            <p>
+              <b>How to catch the pokemon?</b><br/>
+              <ul>
+                <li>Go to the pokemon page</li>
+                <li>Choose the pokemon and click <b>Detail</b></li>
+                <li>From the detail page you can catch the pokemon by clicking <b>Catch The Pokemon</b></li>
+                <li>If <b>Catch The Pokemon SUCCESS</b> then put nickname for the pokemon and click <b>ADD</b></li>
+              </ul>
+            </p>
+          </BoxInfo>
+          </>
+          ):(
+        <TableStyled>
+          <table>
+            <tr>
+              <th>Name</th>
+              <th>Nickname</th>
+              <th>Action</th>
+            </tr>
+            {MyPokemon.map(pok => 
+              <tr key={pok.id}>
+                <td>{pok.name}</td>
+                <td>{pok.nickname}</td>
+                <td>
+                  <BtnDetail><Link to={'/pokemon/'+pok.name+';'+pok.nickname}>Detail</Link></BtnDetail>
+                  <BtnRelease><Link to={'/mypokemon'} className='btn-remove' onClick={releasePokemon.bind(this, pok)} >Release</Link></BtnRelease>
+                </td>
               </tr>
-              {MyPokemon.map(pok => 
-                <tr key={pok.id}>
-                  <td>{pok.name}</td>
-                  <td>{pok.nickname}</td>
-                  <td>
-                    <BtnDetail><Link to={'/pokemon/'+pok.name+';'+pok.nickname}>Detail</Link></BtnDetail>
-                    <BtnRelease><Link to={'/mypokemon'} className='btn-remove' onClick={releasePokemon.bind(this, pok)} >Release</Link></BtnRelease>
-                  </td>
-                </tr>
-              )}
-            </table>
-          </TableStyled>
-          )}
-        </div>
-        </Box>
-      );
-    }else{
-      return null
-    }
+            )}
+          </table>
+        </TableStyled>
+        )}
+      </div>
+      </Box>
+    )
   }
-
+  
   return (
     <BrowserRouter>
     { Loading ? <h1>LOADING...</h1> :(
