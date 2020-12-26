@@ -12,7 +12,7 @@ function App() {
   const [PrevList, setPrevList] = useState( '' );
   const [Loading, setLoading] = useState(true);
   const Url = 'https://pokeapi.co/api/v2/pokemon';
-  const [PokemonName, setPokemonName] = useState( 'bulbasaur' );
+  const [PokemonName, setPokemonName] = useState( '' );
   const PokNickname = useRef ( null );
   const [MyPokemon, setMyPokemon] = useState ( [{name: '', nickname: ''}] );
   const [PokemonDetail, setPokemonDetail] = useState( [{name: '', nickname: '', img: '', abilities: [], moves: [], height: '', weight: '', types: []}] );
@@ -35,15 +35,9 @@ function App() {
   }, [] );
 
   useEffect(() => {
-    if(PokemonDetail){
-      localStorage.setItem('pokemon-detail', JSON.stringify(PokemonDetail));
-    }
-    if(MyPokemon){
-      localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
-    }
-    if(PokemonName !== ''){
-      localStorage.setItem('pokemon-name', PokemonName);
-    }
+    localStorage.setItem('pokemon-detail', JSON.stringify(PokemonDetail));
+    localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
+    localStorage.setItem('pokemon-name', PokemonName);
   } );
 
   useEffect(() =>  {
@@ -166,89 +160,93 @@ function App() {
   //POKEMON DETAIL PAGE
   function showDetail( {match} ) {
     setPokemonName(match.params.name);
-    return(
-      <>
-      { Loading ? <h1>LOADING...</h1> :(
+    if(PokemonDetail){
+      return(
         <>
-        <Box>
-          <center>
-            <label><h1>Pokemon Detail</h1></label>
-          </center>
-          <BoxDetail>
-            <BoxImage>
-              <img src={PokemonDetail.img} alt='Pokemon Pict'/>
-            </BoxImage>
-            {PokemonDetail.nickname !== '' ? (
-              <>
-              <div className='labelBox'>  
-                <label><b>Nickname</b></label>
+        { Loading ? <h1>LOADING...</h1> :(
+          <>
+          <Box>
+            <center>
+              <label><h1>Pokemon Detail</h1></label>
+            </center>
+            <BoxDetail>
+              <BoxImage>
+                <img src={PokemonDetail.img} alt='Pokemon Pict'/>
+              </BoxImage>
+              {PokemonDetail.nickname !== '' ? (
+                <>
+                <div className='labelBox'>  
+                  <label><b>Nickname</b></label>
+                </div>
+                <div className='labelVal'>
+                  {PokemonDetail.nickname}
+                </div>
+                </>
+              ):(<></>)}
+              <div className='labelBox'>
+                <label><b>Name</b></label>
               </div>
               <div className='labelVal'>
-                {PokemonDetail.nickname}
+                {PokemonDetail.name}
               </div>
-              </>
-            ):(<></>)}
-            <div className='labelBox'>
-              <label><b>Name</b></label>
-            </div>
-            <div className='labelVal'>
-              {PokemonDetail.name}
-            </div>
-            <div className='labelBox'>
-              <label><b>Moves</b></label>
-            </div>
-            <GridContainer>
-              {PokemonDetail.moves.map(val=><div>{val.move.name}</div>)}
-            </GridContainer>
-            <div className='labelBox'>
-              <label><b>Abilities</b></label>
-            </div>
-            <GridContainer>
-              {PokemonDetail.abilities.map(val=><div>{val.ability.name}</div>)}
-            </GridContainer>
-            <div className='labelBox'> 
-              <label><b>Types</b></label>
-            </div>
-            <GridContainer>
-              {PokemonDetail.types.map(val=><div>{val.type.name}</div>)}
-            </GridContainer>
-            <div className='labelBox'>
-              <label><b>Weight</b></label>
-            </div>
-            <div className='labelVal'>
-              {PokemonDetail.weight}
-            </div>
-            <div className='labelBox'>
-              <label><b>Height</b></label>
-            </div>
-            <div className='labelVal'>
-              {PokemonDetail.height}
-            </div>
-          </BoxDetail>
-            {PokemonDetail.nickname === '' ? (
-              <center>
-                <BtnCatch onClick={catchPokemon}>
-                  Catch The Pokemon
-                </BtnCatch>
-              </center>
-            ):(<></>)}
-        </Box>
-        {ShowForm ? (
-        <Box>
-          <InputBox>
-          <h1>Give The Pokemon Nickname</h1>
-          <form onSubmit={addMyPokemon}>
-            <label>Pokemon Nickname: </label>
-            <input name="nickname" type="text" ref={PokNickname} required/><br/>
-            <input type='submit' value='ADD' />
-          </form>
-          </InputBox>
-        </Box>
-        ) : null}
-        </>
-      )}        
-      </>  
-    );
+              <div className='labelBox'>
+                <label><b>Moves</b></label>
+              </div>
+              <GridContainer>
+                {PokemonDetail.moves.map(val=><div>{val.move.name}</div>)}
+              </GridContainer>
+              <div className='labelBox'>
+                <label><b>Abilities</b></label>
+              </div>
+              <GridContainer>
+                {PokemonDetail.abilities.map(val=><div>{val.ability.name}</div>)}
+              </GridContainer>
+              <div className='labelBox'> 
+                <label><b>Types</b></label>
+              </div>
+              <GridContainer>
+                {PokemonDetail.types.map(val=><div>{val.type.name}</div>)}
+              </GridContainer>
+              <div className='labelBox'>
+                <label><b>Weight</b></label>
+              </div>
+              <div className='labelVal'>
+                {PokemonDetail.weight}
+              </div>
+              <div className='labelBox'>
+                <label><b>Height</b></label>
+              </div>
+              <div className='labelVal'>
+                {PokemonDetail.height}
+              </div>
+            </BoxDetail>
+              {PokemonDetail.nickname === '' ? (
+                <center>
+                  <BtnCatch onClick={catchPokemon}>
+                    Catch The Pokemon
+                  </BtnCatch>
+                </center>
+              ):(<></>)}
+          </Box>
+          {ShowForm ? (
+          <Box>
+            <InputBox>
+            <h1>Give The Pokemon Nickname</h1>
+            <form onSubmit={addMyPokemon}>
+              <label>Pokemon Nickname: </label>
+              <input name="nickname" type="text" ref={PokNickname} required/><br/>
+              <input type='submit' value='ADD' />
+            </form>
+            </InputBox>
+          </Box>
+          ) : null}
+          </>
+        )}        
+        </>  
+      );
+    }else{
+      return null
+    }
   }
 
   //MY POKEMON PAGE
