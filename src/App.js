@@ -16,7 +16,7 @@ function App() {
   const PokNickname = useRef ( null );
   const [MyPokemon, setMyPokemon] = useState ( [{name: '', nickname: ''}] );
   const [PokemonDetail, setPokemonDetail] = useState( [{name: '', nickname: '', img: '', abilities: [], moves: [], height: '', weight: '', types: []}] );
-  const [ShowForm, setShowForm] = useState(false);
+  const [ShowForm, setShowForm] = useState( null );
 
   useEffect(() => {
     const dataPokemonName = window.localStorage.getItem('pokemon-name');
@@ -33,8 +33,9 @@ function App() {
     if(dataMyPokemon){
       setMyPokemon(JSON.parse(dataMyPokemon));
     }
-    
-    setShowForm(dataShowForm);
+    if(dataShowForm){
+      setShowForm(dataShowForm);
+    }
   }, [] );
 
   useEffect(() => {
