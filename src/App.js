@@ -17,27 +17,23 @@ function App() {
   const [Loading, setLoading] = useState(true);
   const Url = 'https://pokeapi.co/api/v2/pokemon';
   const [PokemonName, setPokemonName] = useState( localStorage.getItem('pokemon-name') );
-  const [PokNickname, setPokNickName] = useState ( localStorage.getItem('pokemon-nickname') );
-  const [MyPokemon, setMyPokemon] = useState ( localStorage.getItem('my-pokemon-data') );
-  const [PokemonDetail, setPokemonDetail] = useState( localStorage.getItem('pokemon-detail') );
+  const [PokNickname, setPokNickName] = useState ( '' );
+  const [MyPokemon, setMyPokemon] = useState ( JSON.parse(localStorage.getItem('my-pokemon-data')) || [{name: '', nickname: ''}] );
+  const [PokemonDetail, setPokemonDetail] = useState( JSON.parse(localStorage.getItem('pokemon-detail')) );
   const [ShowForm, setShowForm] = useState( localStorage.getItem('show-form') );
   const [ClickAdd, setClickAdd] = useState( 0 );
 
   useEffect(() => {
     localStorage.setItem('pokemon-name', PokemonName);
   }, [PokemonName] );
-
-  useEffect(() => {
-    localStorage.setItem('pokemon-nickname', PokNickname);
-  }, [PokNickname] );
-
+  
   useEffect(() => {
     localStorage.setItem('pokemon-detail', JSON.stringify(PokemonDetail));
   }, [PokemonDetail]);
 
   useEffect(() => {
     localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
-  }, [MyPokemon] );
+  }, [MyPokemon]);
 
   useEffect(() => {
     localStorage.setItem('show-form', ShowForm);
@@ -109,25 +105,36 @@ function App() {
 
   const addMyPokemon = (e) => {
     e.preventDefault();
-    if(PokNickname !== ''){
+    if(PokNickname){
       let cek = 0;
-      if(MyPokemon !== null){
+      if(MyPokemon){
         cek = MyPokemon.filter(val => val.nickname === PokNickname).length;
       }
 
       if(cek === 0){ 
-        setMyPokemon([...MyPokemon, {
-          name: PokemonDetail.name,
-          nickname: PokNickname
-        }])
-        setPokNickName('');
-        setShowForm(false);    
+        if(MyPokemon){  
+          setMyPokemon([...MyPokemon, {
+            name: PokemonDetail.name,
+            nickname: PokNickname
+          }])
+        }else if(MyPokemon.length === 1){
+          setMyPokemon({
+            name: PokemonDetail.name,
+            nickname: PokNickname
+          })
+        }else{
+          setMyPokemon([...MyPokemon, {
+            name: PokemonDetail.name,
+            nickname: PokNickname
+          }])
+        }
+        setShowForm(false);
         alert('The pokemon is added!');
       }else{
         alert('Nickname is already exist!');
       }
     }else{
-      return alert('Symbol is not allowed!');
+      alert('Symbol is not allowed!');
     }
   }
   const releasePokemon = (data) => {
@@ -251,7 +258,7 @@ function App() {
               <div className="modal-content">
                 <h1>Give The Pokemon Nickname</h1><br/>
                 <form onSubmit={addMyPokemon}>
-                  <input type="text" placeholder='Put the nickname here' pattern="[0-9A-Za-z]*" value={PokNickname} to={ChangeNickname} title="Symbol are not allowed!" required/><br/>
+                  <input type="text" placeholder='Put the nickname here' pattern="[0-9A-Za-z]*" value={PokNickname} onChange={ChangeNickname} title="Symbol are not allowed!" required/><br/>
                   <input type='submit' value='ADD'/>
                 </form>
               </div>
@@ -276,7 +283,7 @@ function App() {
           <label><h1>My Pokemon List</h1></label>
         </center>
         
-        {MyPokemon === null || MyPokemon.length === 0 ? (
+        {MyPokemon === null || MyPokemon.length === 0? (
           <>
           <BoxWarning>
             <p><b>Doesn't have any pokemon!</b></p>
@@ -302,7 +309,7 @@ function App() {
               <th>Action</th>
             </tr>
             {MyPokemon.map(pok => 
-              <tr key={pok.id}>
+              <tr>
                 <td>{pok.name}</td>
                 <td>{pok.nickname}</td>
                 <td>
