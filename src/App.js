@@ -17,7 +17,7 @@ function App() {
   const { register, handleSubmit } = useForm();
   const [MyPokemon, setMyPokemon] = useState ( JSON.parse(localStorage.getItem('my-pokemon-data')) || [] );
   const [PokemonDetail, setPokemonDetail] = useState( JSON.parse(localStorage.getItem('pokemon-detail')) );
-  const [ShowForm, setShowForm] = useState( false );
+  const [ShowForm, setShowForm] = useState();
 
   useEffect(() => {
     localStorage.setItem('pokemon-name', PokemonName);
@@ -30,10 +30,6 @@ function App() {
   useEffect(() => {
     localStorage.setItem('my-pokemon-data', JSON.stringify(MyPokemon));
   }, [MyPokemon]);
-
-  useEffect(() => {
-    localStorage.setItem('show-form', ShowForm);
-  }, [ShowForm] );
   
   useEffect(() =>  {
     async function fetchData() {
@@ -41,6 +37,7 @@ function App() {
       setNextList(data.next);
       setPrevList(data.previous);
       setPokemon(data.results);
+      setShowForm(localStorage.setItem('show-form', ShowForm));
       setLoading(false);
     }
     fetchData();
@@ -85,6 +82,7 @@ function App() {
   function catchPokemon() {
     var catchPok = Boolean(Math.round(0 + Math.random() * (1 - 0)));
     setShowForm(catchPok);
+    localStorage.setItem('show-form', catchPok);
     if(catchPok){
       return alert('Catch pokemon SUCCESS')
     }else{
@@ -115,6 +113,7 @@ function App() {
       setShowForm(false);
       alert('The pokemon is added!');
     }else{
+      localStorage.setItem('show-form', ShowForm);
       alert('Nickname is already exist!');
     }
   }
@@ -166,7 +165,6 @@ function App() {
   //POKEMON DETAIL PAGE
   function showDetail( {match} ) {
     setPokemonName(match.params.name);
-    localStorage.setItem('show-form',false);
     if(PokemonDetail){
       return(
         <>
