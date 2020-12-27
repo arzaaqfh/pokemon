@@ -185,7 +185,7 @@ function App() {
                 <div className='labelBox'>  
                   <label><b>Nickname</b></label>
                 </div>
-                <div className='labelVal'>
+                <div className='labelNickname'>
                   {PokemonDetail.nickname}
                 </div>
                 </>
@@ -295,7 +295,7 @@ function App() {
             {MyPokemon.map(pok => 
               <tr>
                 <td>{pok.name}</td>
-                <td>{pok.nickname}</td>
+                <td><div className='nickname'>{pok.nickname}</div></td>
                 <td>
                   <BtnDetail><Link to={'/pokemon/'+pok.name+';'+pok.nickname}>Detail</Link></BtnDetail>
                   <BtnRelease><Link to={'/mypokemon'} className='btn-remove' onClick={releasePokemon.bind(this, pok)} >Release</Link></BtnRelease>

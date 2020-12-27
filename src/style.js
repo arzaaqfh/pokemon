@@ -53,6 +53,10 @@ export const BoxDetail = styled.div`
         margin-bottom: 8px;
         padding-left: 8px;
     }
+    .labelNickname {
+        margin-bottom: 8px;
+        padding-left: 8px;
+    }
 `
 
 export const BoxImage = styled.div`
@@ -85,6 +89,9 @@ export const TableStyled = styled.table`
     }
     tr {
         text-transform: capitalize;
+    }
+    .nickname {
+        text-transform: none;
     }
 `
 export const BtnDetail = styled.button`
