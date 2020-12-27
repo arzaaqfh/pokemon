@@ -16,7 +16,7 @@ function App() {
   const [PokNickname, setPokNickName] = useState ( '' );
   const [MyPokemon, setMyPokemon] = useState ( JSON.parse(localStorage.getItem('my-pokemon-data')) || [] );
   const [PokemonDetail, setPokemonDetail] = useState( JSON.parse(localStorage.getItem('pokemon-detail')) );
-  const [ShowForm, setShowForm] = useState( localStorage.getItem('show-form') );
+  const [ShowForm, setShowForm] = useState( false );
 
   useEffect(() => {
     localStorage.setItem('pokemon-name', PokemonName);
@@ -176,6 +176,7 @@ function App() {
   //POKEMON DETAIL PAGE
   function showDetail( {match} ) {
     setPokemonName(match.params.name);
+    localStorage.setItem('show-form',false);
     if(PokemonDetail){
       return(
         <>
@@ -267,7 +268,8 @@ function App() {
   }
 
   //MY POKEMON PAGE
-  function myPokemonPage() {
+  function myPokemonPage() {    
+    localStorage.setItem('my-pokemon-data',JSON.stringify(MyPokemon));
     return(
       <Box>
       <div className="row">
