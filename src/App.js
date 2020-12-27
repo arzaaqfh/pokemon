@@ -6,10 +6,6 @@ import { Navbar, Box, BoxDetail, BoxImage, TableStyled,
   BoxInfo, BoxWarning } from './style';
 import {BrowserRouter, Switch, Route, Link} from 'react-router-dom';
 
-window.onbeforeunload = function() {
-  localStorage.clear();
-}
-
 function App() {
   const [Pokemon, setPokemon] = useState( [] );
   const [NextList, setNextList] = useState( '' );
@@ -18,10 +14,9 @@ function App() {
   const Url = 'https://pokeapi.co/api/v2/pokemon';
   const [PokemonName, setPokemonName] = useState( localStorage.getItem('pokemon-name') );
   const [PokNickname, setPokNickName] = useState ( '' );
-  const [MyPokemon, setMyPokemon] = useState ( JSON.parse(localStorage.getItem('my-pokemon-data')) || [{name: '', nickname: ''}] );
+  const [MyPokemon, setMyPokemon] = useState ( JSON.parse(localStorage.getItem('my-pokemon-data')) || [] );
   const [PokemonDetail, setPokemonDetail] = useState( JSON.parse(localStorage.getItem('pokemon-detail')) );
   const [ShowForm, setShowForm] = useState( localStorage.getItem('show-form') );
-  const [ClickAdd, setClickAdd] = useState( 0 );
 
   useEffect(() => {
     localStorage.setItem('pokemon-name', PokemonName);
@@ -37,7 +32,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('show-form', ShowForm);
-  }, [ClickAdd, ShowForm] );
+  }, [ShowForm] );
   
   useEffect(() =>  {
     async function fetchData() {
@@ -88,10 +83,7 @@ function App() {
 
   function catchPokemon() {
     var catchPok = Boolean(Math.round(0 + Math.random() * (1 - 0)));
-    setClickAdd(1);
     setShowForm(catchPok);
-    
-    localStorage.setItem('click add: ',ClickAdd);
     if(catchPok){
       return alert('Catch pokemon SUCCESS')
     }else{
