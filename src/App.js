@@ -37,7 +37,6 @@ function App() {
       setNextList(data.next);
       setPrevList(data.previous);
       setPokemon(data.results);
-      setShowForm(localStorage.setItem('show-form', ShowForm));
       setLoading(false);
     }
     fetchData();
