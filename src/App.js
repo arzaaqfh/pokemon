@@ -5,6 +5,7 @@ import { Navbar, Box, BoxDetail, BoxImage, TableStyled,
   BtnPrev, BtnNextPrevDisabled, BtnGroup, GridContainer,
   BoxInfo, BoxWarning } from './style';
 import {BrowserRouter, Switch, Route, Link} from 'react-router-dom';
+import {useForm} from 'react-hook-form';
 
 function App() {
   const [Pokemon, setPokemon] = useState( [] );
@@ -13,7 +14,7 @@ function App() {
   const [Loading, setLoading] = useState(true);
   const Url = 'https://pokeapi.co/api/v2/pokemon';
   const [PokemonName, setPokemonName] = useState( localStorage.getItem('pokemon-name') );
-  const [PokNickname, setPokNickName] = useState ( '' );
+  const { register, handleSubmit } = useForm();
   const [MyPokemon, setMyPokemon] = useState ( JSON.parse(localStorage.getItem('my-pokemon-data')) || [] );
   const [PokemonDetail, setPokemonDetail] = useState( JSON.parse(localStorage.getItem('pokemon-detail')) );
   const [ShowForm, setShowForm] = useState( false );
@@ -91,44 +92,33 @@ function App() {
     }
   }
 
-  const ChangeNickname = (e) => {
-    setPokNickName(e.target.value);
-  }
-
-  const addMyPokemon = (e) => {
-    e.preventDefault();
-    if(PokNickname){
-      let cek = 0;
-      if(MyPokemon){
-        cek = MyPokemon.filter(val => val.nickname === PokNickname).length;
-      }
-
-      if(cek === 0){ 
-        if(MyPokemon){  
-          setMyPokemon([...MyPokemon, {
-            name: PokemonDetail.name,
-            nickname: PokNickname
-          }])
-        }else if(MyPokemon.length === 1){
-          setMyPokemon({
-            name: PokemonDetail.name,
-            nickname: PokNickname
-          })
-        }else{
-          setMyPokemon([...MyPokemon, {
-            name: PokemonDetail.name,
-            nickname: PokNickname
-          }])
-        }
-        setShowForm(false);
-        alert('The pokemon is added!');
+  const addMyPokemon = data => {
+    let cek = MyPokemon.filter(val => val.nickname === data.nickname).length;
+    
+    if(cek === 0){
+      if(MyPokemon){  
+        setMyPokemon([...MyPokemon, {
+          name: PokemonDetail.name,
+          nickname: data.nickname
+        }])
+      }else if(MyPokemon.length === 1){
+        setMyPokemon({
+          name: PokemonDetail.name,
+          nickname: data.nickname
+        })
       }else{
-        alert('Nickname is already exist!');
+        setMyPokemon([...MyPokemon, {
+          name: PokemonDetail.name,
+          nickname: data.nickname
+        }])
       }
+      setShowForm(false);
+      alert('The pokemon is added!');
     }else{
-      alert('Symbol is not allowed!');
+      alert('Nickname is already exist!');
     }
   }
+  
   const releasePokemon = (data) => {
     let newData  = MyPokemon.filter(val => { return val.nickname !== data.nickname});
     setMyPokemon(newData);    
@@ -250,9 +240,9 @@ function App() {
             <div id="myModal" className="modal">
               <div className="modal-content">
                 <h1>Give The Pokemon Nickname</h1><br/>
-                <form onSubmit={addMyPokemon}>
-                  <input type="text" placeholder='Put the nickname here' pattern="[0-9A-Za-z]*" value={PokNickname} onChange={ChangeNickname} title="Symbol are not allowed!" required/><br/>
-                  <input type='submit' value='ADD'/>
+                <form onSubmit={handleSubmit(addMyPokemon)}>
+                  <input type="text" placeholder='Nickname' name="nickname" ref={register} pattern='[0-9A-Za-z]*' required/><br/>
+                  <input type='submit'/>
                 </form>
               </div>
           </div>
